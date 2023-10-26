@@ -8,16 +8,24 @@ myForm.addEventListener("submit",onSubmit)
 
 function displayOnScreen(){
 
-    axios.get(`https://crudcrud.com/api/002adcea66094657a990fabc97dad309/practice`)
+    axios.get(`https://crudcrud.com/api/d39738a7e42c4ea1a695071d027ed937/practice`)
     .then((res)=>{
         console.log(res)
         userList.innerHTML='';
         res.data.forEach((item)=>{
             const li =document.createElement('li')
             li.appendChild(document.createTextNode(`Name:${item.name}, Email:${item.email}`))
-            userList.appendChild(li)
+            
+            let delbtn=document.createElement("button")
+            delbtn.className='btn btn-outline-danger btn-sm'
+            delbtn.appendChild(document.createTextNode("Delete"));
+            li.append(delbtn)
+
             
 
+            delbtn.addEventListener('click',()=>del(item._id,li))
+            
+            userList.appendChild(li)
         })
     })
     .catch((err)=>{
@@ -45,10 +53,11 @@ function onSubmit(e){
     
     
 
-    axios.post(`https://crudcrud.com/api/002adcea66094657a990fabc97dad309/practice`,data)
+    axios.post(`https://crudcrud.com/api/d39738a7e42c4ea1a695071d027ed937/practice`,data)
     .then((res)=>{
         console.log(res)
         console.log(data);
+        displayOnScreen()
     })
     .catch((err)=>{
         console.log(err);
@@ -56,6 +65,17 @@ function onSubmit(e){
     
     e.target.username.value=''
     e.target.email.value=''
+}
+function del(id,li){
+    li.remove()
+    axios.delete(`https://crudcrud.com/api/d39738a7e42c4ea1a695071d027ed937/practice/${id}`)
+    .then((res)=>{
+        console.log(res)
+        
+    })
+    .catch((err)=>{
+        console.log(err);
+    })
 }
 
 

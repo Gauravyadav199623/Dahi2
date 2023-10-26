@@ -8,7 +8,7 @@ myForm.addEventListener("submit",onSubmit)
 
 function displayOnScreen(){
 
-    axios.get(`https://crudcrud.com/api/d39738a7e42c4ea1a695071d027ed937/practice`)
+    axios.get(`https://crudcrud.com/api/432fa108ba14416e871b796a0e71864c/practice`)
     .then((res)=>{
         console.log(res)
         userList.innerHTML='';
@@ -21,9 +21,15 @@ function displayOnScreen(){
             delbtn.appendChild(document.createTextNode("Delete"));
             li.append(delbtn)
 
+            let editbtn=document.createElement("button")
+            editbtn.className='btn btn-outline-info btn-sm'
+            editbtn.appendChild(document.createTextNode("Edit"));
+            li.append(editbtn)
+
             
 
             delbtn.addEventListener('click',()=>del(item._id,li))
+            editbtn.addEventListener('click',()=>edit(item._id,item))
             
             userList.appendChild(li)
         })
@@ -53,7 +59,7 @@ function onSubmit(e){
     
     
 
-    axios.post(`https://crudcrud.com/api/d39738a7e42c4ea1a695071d027ed937/practice`,data)
+    axios.post(`https://crudcrud.com/api/432fa108ba14416e871b796a0e71864c/practice`,data)
     .then((res)=>{
         console.log(res)
         console.log(data);
@@ -68,7 +74,7 @@ function onSubmit(e){
 }
 function del(id,li){
     li.remove()
-    axios.delete(`https://crudcrud.com/api/d39738a7e42c4ea1a695071d027ed937/practice/${id}`)
+    axios.delete(`https://crudcrud.com/api/432fa108ba14416e871b796a0e71864c/practice/${id}`)
     .then((res)=>{
         console.log(res)
         
@@ -76,6 +82,24 @@ function del(id,li){
     .catch((err)=>{
         console.log(err);
     })
+}
+function edit(id,item){
+    
+    // let updatedData={
+    //     name: item.name,
+    //     email: item.email 
+    // }
+    axios.delete(`https://crudcrud.com/api/432fa108ba14416e871b796a0e71864c/practice/${id}`)
+    .then((res)=>{
+        console.log(res.data)
+        // document.getElementById('username').value = item.name;
+        // document.getElementById('email').value = item.email;
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
+    username.value=item.name;
+    email.value=item.email
 }
 
 

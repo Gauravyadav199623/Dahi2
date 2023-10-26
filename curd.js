@@ -5,6 +5,26 @@ const userList=document.querySelector("#users");
 
 myForm.addEventListener("submit",onSubmit)
 
+
+function displayOnScreen(){
+
+    axios.get(`https://crudcrud.com/api/002adcea66094657a990fabc97dad309/practice`)
+    .then((res)=>{
+        console.log(res)
+        userList.innerHTML='';
+        res.data.forEach((item)=>{
+            const li =document.createElement('li')
+            li.appendChild(document.createTextNode(`Name:${item.name}, Email:${item.email}`))
+            userList.appendChild(li)
+            
+
+        })
+    })
+    .catch((err)=>{
+        console.log(err);
+    })
+}
+
 function onSubmit(e){
     e.preventDefault();
 
@@ -37,6 +57,6 @@ function onSubmit(e){
     e.target.username.value=''
     e.target.email.value=''
 }
-function displayOnScreen(){
 
-}
+
+displayOnScreen()
